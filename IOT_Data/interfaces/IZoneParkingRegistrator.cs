@@ -4,7 +4,7 @@ using System.Text;
 
 namespace IOT_Data.interfaces
 {
-    interface IZoneParkingRegistrator
+    public interface IZoneParkingRegistrator
     {
     }
 }

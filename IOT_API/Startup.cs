@@ -31,8 +31,10 @@ namespace IOT_API
         {
             services.AddScoped<IZoneBusiness, ZoneBusiness>();
 
-            services.AddScoped<IZoneRegistrator, ZoneRegistrator>();
+            services.AddScoped<IInfoGetter, InfoGetter>();
             services.AddScoped<IZoneAtmRegistrator, ZoneAtmRegistrator>();
+            services.AddScoped<IZoneParkingRegistrator, ZoneParkingRegistrator>();
+            services.AddScoped<IZoneRegistrator, ZoneRegistrator>();
 
             services.AddControllers();
         }
