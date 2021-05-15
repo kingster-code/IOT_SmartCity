@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="business\" />
+    <Folder Include="DTO\" />
+    <Folder Include="interfaces\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\IOT_Data\IOT_Data.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="DTO\AtmMesDTO.cs" />
+  </ItemGroup>
+</Project>
