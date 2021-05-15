@@ -1,0 +1,50 @@
+﻿@page "/dadoszonaspassagens"
+@using Syncfusion.Blazor
+@using Syncfusion.Blazor.Charts
+@using IOT_Data.Models
+@using Monitor_Business.DTO
+@inject NavigationManager NavigationManager
+@inject IZoneBusiness funcoes
+@using Monitor_Business.interfaces
+
+<div class="control-section">
+    <SfChart Title="Número de passagens numa zona">
+        <ChartPrimaryXAxis Title="ID do sensor" ValueType="Syncfusion.Blazor.Charts.ValueType.Category">
+            <ChartPrimaryYAxis Title="Número de passagens"></ChartPrimaryYAxis>
+        </ChartPrimaryXAxis>
+        <ChartSeriesCollection>
+            <ChartSeries Type="ChartSeriesType.Column" DataSource="@passagens"
+                         YName="NumberSteels" XName="ZonaName">
+                <ChartMarker>
+                    <ChartDataLabel Visible="true"> </ChartDataLabel>
+                </ChartMarker>
+            </ChartSeries>
+        </ChartSeriesCollection>
+    </SfChart>
+</div>
+@code {
+    private Theme Theme { get; set; }
+    SfChart Chart;
+    List<RoberyDTO> passagens = new List<RoberyDTO>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        List<VehicleRoberyData> dados = new List<VehicleRoberyData>();
+
+        var passagem = new RoberyDTO { ZonaName = "covilha", NumberSteels = 20 };
+        var passagem2 = new RoberyDTO { ZonaName = "porto", NumberSteels = 45 };
+        var passagem3 = new RoberyDTO { ZonaName = "guarda", NumberSteels = 23 };
+        var passagem4 = new RoberyDTO { ZonaName = "coimbra", NumberSteels = 59 };
+        var passagem5 = new RoberyDTO { ZonaName = "evora", NumberSteels = 11 };
+        passagens.Add(passagem);
+        passagens.Add(passagem2);
+        passagens.Add(passagem3);
+        passagens.Add(passagem4);
+        passagens.Add(passagem5);
+
+
+
+        //passagens = funcoes.GetZonePassage().ToList();
+    }
+
+}
