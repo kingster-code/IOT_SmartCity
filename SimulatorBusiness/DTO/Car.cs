@@ -1,4 +1,4 @@
-﻿namespace SimulatorService.Objects
+﻿namespace SimulatorBusiness.DTO
 {
     public class Car
     {

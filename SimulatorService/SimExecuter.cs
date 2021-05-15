@@ -1,4 +1,5 @@
-﻿using SimulatorService.Objects;
+﻿using SimulatorBusiness.DTO;
+using SimulatorBusiness.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -10,8 +11,10 @@ namespace SimulatorService
     public class SimExecuter
     {
         private readonly HttpClient _client;
+        private readonly string _url;
         private readonly int _numOfCars;
         private readonly int _numOfZones;
+        public IDataBaseFlusher _flusher { get; set; }
 
         private List<Zone> _zones;
         private List<Car> _cars;
@@ -21,17 +24,23 @@ namespace SimulatorService
         private Random _rand = new Random();
 
 
-        public SimExecuter(int numOfCars, int numOfZones)
+        public SimExecuter(IDataBaseFlusher flusher, bool createDB)
         {
             _client = new HttpClient();
-            _numOfCars = numOfCars;
-            _numOfZones = numOfZones;
+            _url = "https://localhost:5001";
+            _numOfCars = 15000;
+            _numOfZones = 5;
 
             _zones = CreateZoneList();
             _cars = CreateCarList();
             _sensors = CreateSensorList();
-
             _airSensors = CreateAirSensorList();
+
+            if (createDB)
+            {
+                flusher.PurgeDataBase();
+                flusher.CreateDataBase(_zones, _cars, _sensors, _airSensors);
+            }
         }
 
         /// <summary>
@@ -41,9 +50,12 @@ namespace SimulatorService
         {
             var carMovedCount = 0;
 
-            Parallel.ForEach(_cars, async car =>
+            //Parallel.ForEach(_cars, async car =>
+            //{
+            foreach (var car in _cars)
             {
-                if (_rand.NextDouble() > 0.02)
+
+                if (_rand.NextDouble() < 0.021)
                 {
                     carMovedCount += 1;
 
@@ -62,19 +74,22 @@ namespace SimulatorService
                     values.Add(sensor.Id);
                     values.Add(car._rfid);
 
-                    await RegisteZonePassAsync(values);
+                    //await RegisteZonePassAsync(values);
+                    RegisteZonePassAsync(values).GetAwaiter().GetResult();
 
                     car._zone = _zones[zoneIndex];
 
                     Console.WriteLine($"car {car._rfid}, passed to zone {zoneIndex}, detected by the sensor {sensor.Id}");
                 }
-            });
+
+            }
+            //});
 
             Console.WriteLine($"Number of cars moved: {carMovedCount}");
 
             Parallel.ForEach(_airSensors, async airSensor =>
             {
-                if (_rand.NextDouble() > 0.50)
+                if (_rand.NextDouble() < 0.50)
                 {
                     var values = new List<long>
                     {
@@ -105,7 +120,7 @@ namespace SimulatorService
         {
             try
             {
-                StringBuilder stringer = new StringBuilder("https://localhost:44312/zone/traffic/");
+                StringBuilder stringer = new StringBuilder($"{_url}/zone/traffic/");
                 stringer.AppendJoin('/', values);
 
 
@@ -129,7 +144,7 @@ namespace SimulatorService
         {
             try
             {
-                StringBuilder stringer = new StringBuilder("https://localhost:44312/zone/air/");
+                StringBuilder stringer = new StringBuilder($"{_url}/zone/air/");
                 stringer.AppendJoin('/', values);
                 stringer.Append($"?co2={airValues[0]}");
                 stringer.Append($"&co={airValues[1]}");

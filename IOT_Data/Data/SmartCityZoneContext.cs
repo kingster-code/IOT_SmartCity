@@ -19,7 +19,7 @@ namespace IOT_Data.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=(LocalDB)/MSSQLLocalDB;AttachDbFilename=C:/Users/danny/source/repos/IOT_API/IOT_Data/IoTDB.mdf;Integrated Security=True");
+            optionsBuilder.UseSqlite("Data Source=C:/Users/danny/Desktop/UBI/Semestre 2/IOT/DBIOT/SmartCity.db;");
         }
     }
 }

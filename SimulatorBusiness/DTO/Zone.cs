@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SimulatorService.Objects
+namespace SimulatorBusiness.DTO
 {
     public class Zone
     {

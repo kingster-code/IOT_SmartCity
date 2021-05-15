@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SimulatorService.Objects
+﻿namespace SimulatorBusiness.DTO
 {
     public class ZoneSensor : Sensor
     {

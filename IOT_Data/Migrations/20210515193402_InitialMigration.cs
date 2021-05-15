@@ -11,9 +11,9 @@ namespace IOT_Data.Migrations
                 name: "SensorTypes",
                 columns: table => new
                 {
-                    TypeId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    SensorName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    TypeId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    SensorName = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -24,9 +24,9 @@ namespace IOT_Data.Migrations
                 name: "Vehicles",
                 columns: table => new
                 {
-                    VehicleId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Operational = table.Column<bool>(type: "bit", nullable: false)
+                    VehicleId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Operational = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -37,9 +37,9 @@ namespace IOT_Data.Migrations
                 name: "Zones",
                 columns: table => new
                 {
-                    ZoneId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    ZoneId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -50,10 +50,10 @@ namespace IOT_Data.Migrations
                 name: "Sensors",
                 columns: table => new
                 {
-                    SensorId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ZoneId = table.Column<int>(type: "int", nullable: true),
-                    TypeId = table.Column<int>(type: "int", nullable: true)
+                    SensorId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    ZoneId = table.Column<int>(type: "INTEGER", nullable: true),
+                    TypeId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -76,12 +76,12 @@ namespace IOT_Data.Migrations
                 name: "VehicleRoberies",
                 columns: table => new
                 {
-                    VehicleRoberyId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ZoneId = table.Column<int>(type: "int", nullable: true),
-                    VehicleId = table.Column<int>(type: "int", nullable: true),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Resolved = table.Column<bool>(type: "bit", nullable: false)
+                    VehicleRoberyId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    ZoneId = table.Column<int>(type: "INTEGER", nullable: true),
+                    VehicleId = table.Column<int>(type: "INTEGER", nullable: true),
+                    Date = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Resolved = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -104,17 +104,17 @@ namespace IOT_Data.Migrations
                 name: "AtmosphereData",
                 columns: table => new
                 {
-                    AtmreadId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    SensorId = table.Column<int>(type: "int", nullable: true),
-                    CO2 = table.Column<double>(type: "float", nullable: false),
-                    CO = table.Column<double>(type: "float", nullable: false),
-                    HC = table.Column<double>(type: "float", nullable: false),
-                    Rcho = table.Column<double>(type: "float", nullable: false),
-                    NOx = table.Column<double>(type: "float", nullable: false),
-                    SOx = table.Column<double>(type: "float", nullable: false),
-                    MP = table.Column<double>(type: "float", nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    AtmreadId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    SensorId = table.Column<int>(type: "INTEGER", nullable: true),
+                    CO2 = table.Column<double>(type: "REAL", nullable: false),
+                    CO = table.Column<double>(type: "REAL", nullable: false),
+                    HC = table.Column<double>(type: "REAL", nullable: false),
+                    Rcho = table.Column<double>(type: "REAL", nullable: false),
+                    NOx = table.Column<double>(type: "REAL", nullable: false),
+                    SOx = table.Column<double>(type: "REAL", nullable: false),
+                    MP = table.Column<double>(type: "REAL", nullable: false),
+                    Date = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -131,11 +131,11 @@ namespace IOT_Data.Migrations
                 name: "ZoneAreas",
                 columns: table => new
                 {
-                    ZoneAreaId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    SensorId = table.Column<int>(type: "int", nullable: true),
-                    VehicleId = table.Column<int>(type: "int", nullable: true),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ZoneAreaId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    SensorId = table.Column<int>(type: "INTEGER", nullable: true),
+                    VehicleId = table.Column<int>(type: "INTEGER", nullable: true),
+                    Date = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -158,12 +158,12 @@ namespace IOT_Data.Migrations
                 name: "ZoneParkingRegister",
                 columns: table => new
                 {
-                    ZoneParkingId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    SensorId = table.Column<int>(type: "int", nullable: true),
-                    VehicleId = table.Column<int>(type: "int", nullable: true),
-                    Duration = table.Column<TimeSpan>(type: "time", nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ZoneParkingId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    SensorId = table.Column<int>(type: "INTEGER", nullable: true),
+                    VehicleId = table.Column<int>(type: "INTEGER", nullable: true),
+                    Duration = table.Column<TimeSpan>(type: "TEXT", nullable: false),
+                    Date = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
