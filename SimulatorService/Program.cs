@@ -12,7 +12,7 @@ namespace SimulatorService
             while (true)
             {
                 sim.CallAPI();
-                Task.Delay(1000);
+                Task.Delay(10000);
             }
         }
     }

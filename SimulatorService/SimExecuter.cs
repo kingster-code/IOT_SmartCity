@@ -39,10 +39,14 @@ namespace SimulatorService
         /// </summary>
         public void CallAPI()
         {
+            var carMovedCount = 0;
+
             Parallel.ForEach(_cars, async car =>
             {
                 if (_rand.NextDouble() > 0.02)
                 {
+                    carMovedCount += 1;
+
                     var values = new List<long>();
 
                     var zoneIndex = _zones.IndexOf(car._zone);
@@ -50,15 +54,23 @@ namespace SimulatorService
                     if (zoneIndex < 0) zoneIndex = 2;
                     if (zoneIndex >= _zones.Count) zoneIndex = _zones.Count - 2;
 
-                    var sensor = _zones[zoneIndex].zoneSensors[_rand.Next(0, _zones[zoneIndex].zoneSensors.Count)];
+                    var zonesensors = _zones[zoneIndex].zoneSensors;
+
+                    var sensor = zonesensors[_rand.Next(0, zonesensors.Count)];
 
                     values.Add(zoneIndex);
                     values.Add(sensor.Id);
                     values.Add(car._rfid);
 
                     await RegisteZonePassAsync(values);
+
+                    car._zone = _zones[zoneIndex];
+
+                    Console.WriteLine($"car {car._rfid}, passed to zone {zoneIndex}, detected by the sensor {sensor.Id}");
                 }
             });
+
+            Console.WriteLine($"Number of cars moved: {carMovedCount}");
 
             Parallel.ForEach(_airSensors, async airSensor =>
             {
@@ -66,7 +78,7 @@ namespace SimulatorService
                 {
                     var values = new List<long>
                     {
-                        airSensor.AtachedZone.SensorID,
+                        airSensor.AtachedZone.ZoneID,
                         airSensor.Id
                     };
 
@@ -82,8 +94,11 @@ namespace SimulatorService
                     };
 
                     await RegisterAirAsync(values, airValues);
+
+                    Console.WriteLine($"Sensor {airSensor.Id}, registered atmosphere quality for zone {airSensor.AtachedZone.ZoneID}");
                 }
             });
+            Console.WriteLine($"Finished Call API");
         }
 
         private async Task RegisteZonePassAsync(List<long> values)
@@ -174,7 +189,7 @@ namespace SimulatorService
         {
             var sensorList = new List<ZoneSensor>();
 
-            for (int i = 0; i < _numOfCars; i++)
+            for (int i = 0; i < 100; i++)
             {
                 Zone zone = _zones[_rand.Next(0, _zones.Count)];
                 var sensor = new ZoneSensor(i, zone);
@@ -195,7 +210,7 @@ namespace SimulatorService
         {
             var sensorList = new List<AirSensor>();
 
-            for (int i = 0; i < _numOfCars; i++)
+            for (int i = 0; i < 100; i++)
             {
                 Zone zone = _zones[_rand.Next(0, _zones.Count)];
                 var sensor = new AirSensor(i, zone);

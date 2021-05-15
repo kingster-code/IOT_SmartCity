@@ -4,13 +4,15 @@ namespace SimulatorService.Objects
 {
     public class Zone
     {
-        public long SensorID { get; set; }
+        public long ZoneID { get; set; }
         public List<ZoneSensor> zoneSensors { get; set; }
         public List<AirSensor> airSensors { get; set; }
 
         public Zone(long sensorID)
         {
-            SensorID = sensorID;
+            zoneSensors = new List<ZoneSensor>();
+            airSensors = new List<AirSensor>();
+            ZoneID = sensorID;
         }
     }
 }
