@@ -19,7 +19,7 @@ namespace SimulatorService
             while (true)
             {
                 _sim.CallAPI();
-                Task.Delay(10000);
+                Task.Delay(10 * 1000).GetAwaiter().GetResult();
             }
         }
     }

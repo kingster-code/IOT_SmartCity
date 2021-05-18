@@ -41,6 +41,8 @@ namespace IOT_API.Controllers
             if (sensor < 0) return BadRequest("sensor id must be positive and not null");
             if (rfid < 0) return BadRequest("rfid must not be null");
 
+            Console.WriteLine($"Recieved register for car {rfid}, entering zone {zone} from sensor {sensor}");
+
             var zoneReg = new ZoneInfo
             {
                 Zone = zone,
@@ -99,6 +101,8 @@ namespace IOT_API.Controllers
             if (nox < 0) return BadRequest("nox must be positive");
             if (sox < 0) return BadRequest("sox must be positive");
             if (mp < 0) return BadRequest("mp must be positive");
+
+            Console.WriteLine($"Recieved atmosphere register, entering zone {zone} from sensor {sensor}");
 
             var zoneAtm = new ZoneAtmInfo
             {

@@ -3,6 +3,7 @@ using IOT_Data.interfaces;
 using IOT_Data.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace IOT_Data.dataInteractors
@@ -19,7 +20,7 @@ namespace IOT_Data.dataInteractors
             }
             catch (Exception e)
             {
-                Console.WriteLine("Problem connecting to DB when registering a Atmosphere reading");
+                Console.WriteLine("Problem connecting to DB when registering a AtmData");
                 throw e;
             }
         }
@@ -29,12 +30,12 @@ namespace IOT_Data.dataInteractors
             try
             {
                 using var context = new SmartCityZoneContext();
-                context.Add(atmList);
+                context.AddRange(atmList);
                 context.SaveChanges();
             }
             catch (Exception e)
             {
-                Console.WriteLine("Problem connecting to DB when registering a Atmosphere reading");
+                Console.WriteLine("Problem connecting to DB when registering AtmDatas");
                 throw e;
             }
         }
@@ -49,7 +50,7 @@ namespace IOT_Data.dataInteractors
             }
             catch (Exception e)
             {
-                Console.WriteLine("Problem connecting to DB when registering a Atmosphere reading");
+                Console.WriteLine("Problem connecting to DB when registering a Robery");
                 throw e;
             }
         }
@@ -59,12 +60,12 @@ namespace IOT_Data.dataInteractors
             try
             {
                 using var context = new SmartCityZoneContext();
-                context.Add(roberyList);
+                context.AddRange(roberyList);
                 context.SaveChanges();
             }
             catch (Exception e)
             {
-                Console.WriteLine("Problem connecting to DB when registering a Atmosphere reading");
+                Console.WriteLine("Problem connecting to DB when registering Roberys");
                 throw e;
             }
         }
@@ -79,7 +80,7 @@ namespace IOT_Data.dataInteractors
             }
             catch (Exception e)
             {
-                Console.WriteLine("Problem connecting to DB when registering a Atmosphere reading");
+                Console.WriteLine("Problem connecting to DB when registering a Sensor");
                 throw e;
             }
         }
@@ -89,12 +90,20 @@ namespace IOT_Data.dataInteractors
             try
             {
                 using var context = new SmartCityZoneContext();
-                context.Add(sensorList);
+
+                sensorList = sensorList.Select(x => new Sensor
+                {
+                    Zone = context.Zones.Where(y => y.ZoneId == x.Zone.ZoneId).First(),
+                    SensorId = x.SensorId,
+                    Type = context.SensorTypes.Where(y => y.TypeId == x.Type.TypeId).First()
+                }).ToList();
+
+                context.AddRange(sensorList);
                 context.SaveChanges();
             }
             catch (Exception e)
             {
-                Console.WriteLine("Problem connecting to DB when registering a Atmosphere reading");
+                Console.WriteLine("Problem connecting to DB when registering Sensors");
                 throw e;
             }
         }
@@ -109,7 +118,7 @@ namespace IOT_Data.dataInteractors
             }
             catch (Exception e)
             {
-                Console.WriteLine("Problem connecting to DB when registering a Atmosphere reading");
+                Console.WriteLine("Problem connecting to DB when registering a SensorType");
                 throw e;
             }
         }
@@ -119,12 +128,12 @@ namespace IOT_Data.dataInteractors
             try
             {
                 using var context = new SmartCityZoneContext();
-                context.Add(sensorTypeList);
+                context.AddRange(sensorTypeList);
                 context.SaveChanges();
             }
             catch (Exception e)
             {
-                Console.WriteLine("Problem connecting to DB when registering a Atmosphere reading");
+                Console.WriteLine("Problem connecting to DB when registering SensorTypes");
                 throw e;
             }
         }
@@ -139,7 +148,7 @@ namespace IOT_Data.dataInteractors
             }
             catch (Exception e)
             {
-                Console.WriteLine("Problem connecting to DB when registering a Atmosphere reading");
+                Console.WriteLine("Problem connecting to DB when registering a Vehicle");
                 throw e;
             }
         }
@@ -149,12 +158,12 @@ namespace IOT_Data.dataInteractors
             try
             {
                 using var context = new SmartCityZoneContext();
-                context.Add(vehicleList);
+                context.AddRange(vehicleList);
                 context.SaveChanges();
             }
             catch (Exception e)
             {
-                Console.WriteLine("Problem connecting to DB when registering a Atmosphere reading");
+                Console.WriteLine("Problem connecting to DB when registering Vehicles");
                 throw e;
             }
         }
@@ -169,7 +178,7 @@ namespace IOT_Data.dataInteractors
             }
             catch (Exception e)
             {
-                Console.WriteLine("Problem connecting to DB when registering a Atmosphere reading");
+                Console.WriteLine("Problem connecting to DB when registering a Zone");
                 throw e;
             }
         }
@@ -179,12 +188,12 @@ namespace IOT_Data.dataInteractors
             try
             {
                 using var context = new SmartCityZoneContext();
-                context.Add(zoneList);
+                context.AddRange(zoneList);
                 context.SaveChanges();
             }
             catch (Exception e)
             {
-                Console.WriteLine("Problem connecting to DB when registering a Atmosphere reading");
+                Console.WriteLine("Problem connecting to DB when registering Zones");
                 throw e;
             }
         }
@@ -199,7 +208,7 @@ namespace IOT_Data.dataInteractors
             }
             catch (Exception e)
             {
-                Console.WriteLine("Problem connecting to DB when registering a Atmosphere reading");
+                Console.WriteLine("Problem connecting to DB when registering a ZoneAreaData");
                 throw e;
             }
         }
@@ -209,12 +218,12 @@ namespace IOT_Data.dataInteractors
             try
             {
                 using var context = new SmartCityZoneContext();
-                context.Add(zoneAreaList);
+                context.AddRange(zoneAreaList);
                 context.SaveChanges();
             }
             catch (Exception e)
             {
-                Console.WriteLine("Problem connecting to DB when registering a Atmosphere reading");
+                Console.WriteLine("Problem connecting to DB when registering ZoneAreaDatas");
                 throw e;
             }
         }
@@ -229,7 +238,7 @@ namespace IOT_Data.dataInteractors
             }
             catch (Exception e)
             {
-                Console.WriteLine("Problem connecting to DB when registering a Atmosphere reading");
+                Console.WriteLine("Problem connecting to DB when registering ar ZoneParking");
                 throw e;
             }
         }
@@ -239,12 +248,12 @@ namespace IOT_Data.dataInteractors
             try
             {
                 using var context = new SmartCityZoneContext();
-                context.Add(zoneParkingList);
+                context.AddRange(zoneParkingList);
                 context.SaveChanges();
             }
             catch (Exception e)
             {
-                Console.WriteLine("Problem connecting to DB when registering a Atmosphere reading");
+                Console.WriteLine("Problem connecting to DB when registering ZoneParkings");
                 throw e;
             }
         }

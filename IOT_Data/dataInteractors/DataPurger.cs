@@ -14,23 +14,26 @@ namespace IOT_Data.dataInteractors
             try
             {
                 using var context = new SmartCityZoneContext();
-                Console.WriteLine("REmoving all data from AtmosphereData");
-                context.AtmosphereData.ToList().ForEach(x => context.AtmosphereData.Remove(x));
-                Console.WriteLine("REmoving all data from Sensors");
-                context.Sensors.ToList().ForEach(x => context.Sensors.Remove(x));
-                Console.WriteLine("REmoving all data from SensorTypes");
-                context.SensorTypes.ToList().ForEach(x => context.SensorTypes.Remove(x));
-                Console.WriteLine("REmoving all data from Vehicles");
-                context.Vehicles.ToList().ForEach(x => context.Vehicles.Remove(x));
-                Console.WriteLine("REmoving all data from VehicleRoberies");
-                context.VehicleRoberies.ToList().ForEach(x => context.VehicleRoberies.Remove(x));
-                Console.WriteLine("REmoving all data from Zones");
-                context.Zones.ToList().ForEach(x => context.Zones.Remove(x));
-                Console.WriteLine("REmoving all data from ZoneAreas");
-                context.ZoneAreas.ToList().ForEach(x => context.ZoneAreas.Remove(x));
-                Console.WriteLine("REmoving all data from ZoneParkingRegister");
-                context.ZoneParkingRegister.ToList().ForEach(x => context.ZoneParkingRegister.Remove(x));
+                context.Database.EnsureCreated();
 
+                Console.WriteLine("Removing all data from AtmosphereData");
+                context.AtmosphereData.RemoveRange(context.AtmosphereData.ToList());
+                Console.WriteLine("Removing all data from Sensors");
+                context.Sensors.RemoveRange(context.Sensors.ToList());
+                Console.WriteLine("Removing all data from SensorTypes");
+                context.SensorTypes.RemoveRange(context.SensorTypes.ToList());
+                Console.WriteLine("Removing all data from Vehicles");
+                context.Vehicles.RemoveRange(context.Vehicles.ToList());
+                Console.WriteLine("Removing all data from VehicleRoberies");
+                context.VehicleRoberies.RemoveRange(context.VehicleRoberies.ToList());
+                Console.WriteLine("Removing all data from Zones");
+                context.Zones.RemoveRange(context.Zones.ToList());
+                Console.WriteLine("Removing all data from ZoneAreas");
+                context.ZoneAreas.RemoveRange(context.ZoneAreas.ToList());
+                Console.WriteLine("Removing all data from ZoneParkingRegister");
+                context.ZoneParkingRegister.RemoveRange(context.ZoneParkingRegister.ToList());
+
+                context.SaveChanges();
             }
             catch (Exception e)
             {

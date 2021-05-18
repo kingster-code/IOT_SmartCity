@@ -24,7 +24,7 @@ namespace SimulatorService
         private Random _rand = new Random();
 
 
-        public SimExecuter(IDataBaseFlusher flusher, bool createDB)
+        public SimExecuter(IDataBaseFlusher flusher, bool createDB = false)
         {
             _client = new HttpClient();
             _url = "https://localhost:5001";
@@ -54,7 +54,6 @@ namespace SimulatorService
             //{
             foreach (var car in _cars)
             {
-
                 if (_rand.NextDouble() < 0.021)
                 {
                     carMovedCount += 1;
@@ -81,13 +80,14 @@ namespace SimulatorService
 
                     Console.WriteLine($"car {car._rfid}, passed to zone {zoneIndex}, detected by the sensor {sensor.Id}");
                 }
-
             }
             //});
 
             Console.WriteLine($"Number of cars moved: {carMovedCount}");
 
-            Parallel.ForEach(_airSensors, async airSensor =>
+            //Parallel.ForEach(_airSensors, async airSensor =>
+            //{
+            foreach (var airSensor in _airSensors)
             {
                 if (_rand.NextDouble() < 0.50)
                 {
@@ -108,11 +108,13 @@ namespace SimulatorService
                         _rand.NextDouble() * 6    // mp
                     };
 
-                    await RegisterAirAsync(values, airValues);
+                    //await RegisterAirAsync(values, airValues);
+                    RegisterAirAsync(values, airValues).GetAwaiter().GetResult(); ;
 
                     Console.WriteLine($"Sensor {airSensor.Id}, registered atmosphere quality for zone {airSensor.AtachedZone.ZoneID}");
                 }
-            });
+            }
+            //});
             Console.WriteLine($"Finished Call API");
         }
 
@@ -131,7 +133,7 @@ namespace SimulatorService
                 // Above three lines can be replaced with new helper method below
                 // string responseBody = await _client.GetStringAsync(uri);
 
-                Console.WriteLine(responseBody);
+                //Console.WriteLine(responseBody);
             }
             catch (HttpRequestException e)
             {
@@ -161,7 +163,7 @@ namespace SimulatorService
                 // Above three lines can be replaced with new helper method below
                 // string responseBody = await _client.GetStringAsync(uri);
 
-                Console.WriteLine(responseBody);
+                //Console.WriteLine(responseBody);
             }
             catch (HttpRequestException e)
             {
@@ -178,7 +180,7 @@ namespace SimulatorService
         {
             var zoneList = new List<Zone>();
 
-            for (int i = 0; i < _numOfZones; i++) zoneList.Add(new Zone(i));
+            for (int i = 1; i <= _numOfZones; i++) zoneList.Add(new Zone(i));
 
             return zoneList;
         }
@@ -191,7 +193,7 @@ namespace SimulatorService
         {
             var carList = new List<Car>();
 
-            for (int i = 0; i < _numOfCars; i++) carList.Add(new Car(i, _zones[_rand.Next(0, _zones.Count)]));
+            for (int i = 1; i <= _numOfCars; i++) carList.Add(new Car(i, _zones[_rand.Next(0, _zones.Count)]));
 
             return carList;
         }
@@ -204,7 +206,7 @@ namespace SimulatorService
         {
             var sensorList = new List<ZoneSensor>();
 
-            for (int i = 0; i < 100; i++)
+            for (int i = 1; i <= 100; i++)
             {
                 Zone zone = _zones[_rand.Next(0, _zones.Count)];
                 var sensor = new ZoneSensor(i, zone);
@@ -225,7 +227,7 @@ namespace SimulatorService
         {
             var sensorList = new List<AirSensor>();
 
-            for (int i = 0; i < 100; i++)
+            for (int i = 101; i <= 200; i++)
             {
                 Zone zone = _zones[_rand.Next(0, _zones.Count)];
                 var sensor = new AirSensor(i, zone);

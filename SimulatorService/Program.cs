@@ -27,7 +27,9 @@ namespace SimulatorService
                 .ConfigureServices((_, services) =>
                     services.AddScoped<IDataBaseFlusher, DataBaseFlusher>()
                             .AddScoped<IDataInserter, DataInserter>()
-                            .AddScoped<SimExecuter>()
+                            .AddScoped<IDataPurger, DataPurger>()
+                            .AddScoped<IInfoGetter, InfoGetter>()
+                            .AddSingleton<SimExecuter>()
                 );
     }
 }

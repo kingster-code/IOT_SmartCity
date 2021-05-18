@@ -3,6 +3,7 @@ using IOT_Data.interfaces;
 using IOT_Data.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace IOT_Data.dataInteractors
@@ -14,6 +15,9 @@ namespace IOT_Data.dataInteractors
             try
             {
                 using var context = new SmartCityZoneContext();
+
+                zoneAtmDataInfo.Sensor = context.Sensors.ToList().Where(x => x.SensorId == zoneAtmDataInfo.Sensor.SensorId).First();
+
                 context.Add(zoneAtmDataInfo);
                 context.SaveChanges();
             }
