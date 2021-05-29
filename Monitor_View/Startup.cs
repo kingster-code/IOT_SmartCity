@@ -13,7 +13,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Monitor_Business.business;
 using Monitor_Business.interfaces;
-using Monitor_View.Data;
 using Syncfusion.Blazor;
 
 namespace Monitor_View

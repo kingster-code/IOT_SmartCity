@@ -1,0 +1,72 @@
+﻿@page "/dadosroubo"
+@using Syncfusion.Blazor
+@using Syncfusion.Blazor.Charts
+@using IOT_Data.Models
+@using Monitor_Business.DTO
+@inject NavigationManager NavigationManager
+@inject IZoneBusiness funcoes
+@using Monitor_Business.interfaces
+<div class="row">
+    <div class="col-xl-8 col-lg-7">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Número de furtos por zona</h6>
+            </div>
+            <div class="card-body">
+                <SfAccumulationChart Title=" " Theme="@Theme">
+                    <AccumulationChartLegendSettings Visible="true" Position="LegendPosition.Top">
+                    </AccumulationChartLegendSettings>
+                    <AccumulationChartTooltipSettings Enable="true"></AccumulationChartTooltipSettings>
+                    <AccumulationChartSeriesCollection>
+                        <AccumulationChartSeries DataSource="@data" XName="ZonaName" YName="NumberSteels" Radius="70%" InnerRadius="40%" Name="Project" Explode="true" ExplodeOffset="10%" ExplodeIndex="3">
+                            <AccumulationDataLabelSettings Visible="true" Name="DataLabelMappingName">
+                                <AccumulationChartDataLabelFont FontWeight="600" Color="white"></AccumulationChartDataLabelFont>
+                            </AccumulationDataLabelSettings>
+                        </AccumulationChartSeries>
+                    </AccumulationChartSeriesCollection>
+                </SfAccumulationChart>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private Theme Theme { get; set; }
+    SfChart Chart;
+    private List<RoberyDTO> data = new List<RoberyDTO>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var aux = new List<RoberyDTO>();
+        data.Add(new RoberyDTO
+        {
+            ZonaName = "1",
+            NumberSteels = 10,
+        });
+        data.Add(new RoberyDTO
+        {
+            ZonaName = "2",
+            NumberSteels = 7,
+        });
+        data.Add(new RoberyDTO
+        {
+            ZonaName = "3",
+            NumberSteels = 13,
+        });
+        data.Add(new RoberyDTO
+        {
+            ZonaName = "4",
+            NumberSteels = 3,
+        });
+        data.Add(new RoberyDTO
+        {
+            ZonaName = "5",
+            NumberSteels = 17,
+        });
+
+        /* data = funcoes.GetZoneNumberRobery().ToList(); */
+
+    }
+
+}

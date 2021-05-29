@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IOT_Data.Migrations
 {
     [DbContext(typeof(SmartCityZoneContext))]
-    [Migration("20210515193402_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20210516171112_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

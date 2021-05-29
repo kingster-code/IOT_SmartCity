@@ -1,4 +1,4 @@
-﻿@page "/dadoszonaspassagens"
+﻿@page "/dadosparques"
 @using System;
 @using System.Diagnostics;
 @using System.Threading;
@@ -11,9 +11,9 @@
 @using Monitor_Business.interfaces
 
 <div class="control-section">
-    <SfChart Title="Número de carros por zona">
+    <SfChart Title="Número de estacionamentos em utilização por zona">
         <ChartPrimaryXAxis Title="ID da zona" ValueType="Syncfusion.Blazor.Charts.ValueType.Category">
-            <ChartPrimaryYAxis Title="Número de carros"></ChartPrimaryYAxis>
+            <ChartPrimaryYAxis Title="Número de estacionamentos ocupados"></ChartPrimaryYAxis>
         </ChartPrimaryXAxis>
         <ChartSeriesCollection>
             <ChartSeries Type="ChartSeriesType.Column" DataSource="@veiculosZona"
@@ -32,10 +32,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-         veiculosZona= funcoes.NumberVehicleZone();
+        veiculosZona= funcoes.NumberVehiclePark();
 
     }
-
-    
 
 }

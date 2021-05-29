@@ -1,4 +1,4 @@
-﻿@page "/dadosatm"
+﻿@page "/dadosatmlastmonth"
 
 @using IOT_Data.Models
 @using Monitor_Business.interfaces
@@ -7,12 +7,12 @@
 @using Syncfusion.Blazor.Data
 @inject NavigationManager NavigationManager
 
-<SfChart Title="Dados relativos ao ar" Theme="@Theme" @ref="Chart">
+<SfChart Title="Dados relativos aos gases tóxicos no último mes" Theme="@Theme" @ref="Chart">
     <ChartArea><ChartAreaBorder Width="0"></ChartAreaBorder></ChartArea>
-    <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.DateTime" LabelFormat="yyyy" IntervalType="IntervalType.Years" EdgeLabelPlacement="EdgeLabelPlacement.Shift">
+    <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.DateTime"  IntervalType="IntervalType.Days" EdgeLabelPlacement="EdgeLabelPlacement.Shift">
         <ChartAxisMajorGridLines Width="0"></ChartAxisMajorGridLines>
     </ChartPrimaryXAxis>
-    <ChartPrimaryYAxis LabelFormat="{value}%" RangePadding="ChartRangePadding.None">
+    <ChartPrimaryYAxis LabelFormat="{value}" RangePadding="ChartRangePadding.None">
         <ChartAxisLineStyle Width="0"></ChartAxisLineStyle>
         <ChartAxisMajorTickLines Width="0"></ChartAxisMajorTickLines>
     </ChartPrimaryYAxis>
@@ -55,6 +55,7 @@
         </ChartSeries>
     </ChartSeriesCollection>
 </SfChart>
+
 <!-- Text input-->
 <div class="form-group">
     <label class="col-md-4 control-label" for="Id do sensor atmosfera">Id do sensor atmosfera</label>
@@ -67,7 +68,7 @@
 <div class="form-group">
     <label class="col-md-4 control-label" for=""></label>
     <div class="col-md-4">
-        <button @onclick="Foo" class="btn btn-primary">Atualizar</button>
+        <button @onclick="Atualizar" class="btn btn-primary">Atualizar</button>
     </div>
 </div>
 @code {
@@ -76,13 +77,13 @@
     private List<AtmData> zones;
 
     private List<AtmData> zonesinicial = new List<AtmData>();
-    private long CurrentValue { get; set; }
+    private int CurrentValue { get; set; }
 
-    private void Foo()
+    private void Atualizar()
     {
-        zones = zonesinicial.Where(s => s.Sensor.Zone.ZoneId == CurrentValue).OrderBy(s => s.Date).ToList();
+       
 
-        //zones=funcoes.GetAtmZone().Where(s => s.Sensor.Zone.ZoneId == CurrentValue).OrderBy(s => s.Date).ToList();
+        zones=funcoes.GetAtmZoneLastMonth(CurrentValue).ToList();
         Chart.RefreshLiveData();
     }
 
@@ -90,72 +91,7 @@
     {
         CurrentValue = 1;
 
-        Zone zona = new Zone { Name = "covilha", ZoneId = 1 };
-        var type = new SensorType { SensorName = "detetar", TypeId = 1 };
-        Sensor s = new Sensor { SensorId = 1, Type = type, Zone = zona };
-
-        Zone zona2 = new Zone { Name = "guarda", ZoneId = 2 };
-        var type2 = new SensorType { SensorName = "detetar", TypeId = 2 };
-        Sensor s2 = new Sensor { SensorId = 2, Type = type2, Zone = zona2 };
-
-        Zone zona3 = new Zone { Name = "porto", ZoneId = 3 };
-        var type3 = new SensorType { SensorName = "detetar", TypeId = 3 };
-        Sensor s3 = new Sensor { SensorId = 3, Type = type3, Zone = zona3 };
-        var rng = new Random();
-        var test = new List<AtmData>();
-
-        for (int i = 0; i < 5; i++)
-        {
-            test.Add(new AtmData
-            {
-                AtmreadId = i,
-                CO = rng.NextDouble(),
-                HC = rng.NextDouble(),
-                Rcho = rng.NextDouble(),
-                NOx = rng.NextDouble(),
-                SOx = rng.NextDouble(),
-                MP = rng.NextDouble(),
-                CO2 = rng.NextDouble(),
-                Date = new DateTime(rng.Next(2018, 2021), rng.Next(1, 12), rng.Next(1, 12)),
-                Sensor = s,
-            });
-            test.Add(new AtmData
-            {
-                AtmreadId = i,
-                CO = rng.NextDouble(),
-                HC = rng.NextDouble(),
-                Rcho = rng.NextDouble(),
-                NOx = rng.NextDouble(),
-                SOx = rng.NextDouble(),
-                MP = rng.NextDouble(),
-                CO2 = rng.NextDouble(),
-                Date = new DateTime(rng.Next(2018, 2021), rng.Next(1, 12), rng.Next(1, 12)),
-                Sensor = s2,
-            });
-            test.Add(new AtmData
-            {
-                AtmreadId = i,
-                CO = rng.NextDouble(),
-                HC = rng.NextDouble(),
-                Rcho = rng.NextDouble(),
-                NOx = rng.NextDouble(),
-                SOx = rng.NextDouble(),
-                MP = rng.NextDouble(),
-                CO2 = rng.NextDouble(),
-                Date = new DateTime(rng.Next(2018, 2021), rng.Next(1, 12), rng.Next(1, 12)),
-                Sensor = s3,
-            });
-
-        }
-
-        zonesinicial = test.ToList();
-        test = test.Where(s => s.Sensor.Zone.ZoneId == CurrentValue).OrderBy(s => s.Date).ToList();
-        zones = test;
-
-
-
-
-        //zones=funcoes.GetAtmZone().Where(s => s.Sensor.Zone.ZoneId == CurrentValue).OrderBy(s => s.Date).ToList();
+        zones=funcoes.GetAtmZoneLastMonth(CurrentValue).ToList();
         if (NavigationManager.Uri.IndexOf("material") > -1)
         {
             Theme = Theme.Material;
