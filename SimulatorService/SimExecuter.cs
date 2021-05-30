@@ -127,13 +127,13 @@ namespace SimulatorService
                     RegisterDeparkAsync(car._rfid).GetAwaiter().GetResult();
 
                     car._parked = false;
-                    Console.WriteLine($"car {car} just went on the road!");
+                    Console.WriteLine($"car {car._rfid} just went on the road!");
                 }
             }
 
             foreach (var car in _cars.Where(car => car._parked == false))
             {
-                if (_rand.NextDouble() < 0.2)
+                if (_rand.NextDouble() < 0.02)
                 {
                     var values = new List<long>();
 
@@ -150,7 +150,7 @@ namespace SimulatorService
                     RegisterParkAsync(values).GetAwaiter().GetResult();
 
                     car._parked = true;
-                    Console.WriteLine($"car {car} is doing a pit stop!");
+                    Console.WriteLine($"car {car._rfid} is doing a pit stop!");
                 }
             }
         }
