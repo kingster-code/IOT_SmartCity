@@ -8,6 +8,7 @@
     <Folder Include="DTO\" />
     <Folder Include="interf\" />
     <Folder Include="business2\" />
+    <Folder Include="interfaces\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\IOT_Data\IOT_Data.csproj" />
