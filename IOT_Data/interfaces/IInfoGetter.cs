@@ -17,13 +17,24 @@ namespace IOT_Data.interfaces
         ZoneParkingData QueryZoneParking(long zoneParkingId);
 
 
-        List<VehicleRoberyData> QueryGetRoberyList();
-        List<Zone> QueryGetZoneList();
+        
         int QueryNumberSensor(int id);
-        IEnumerable<AtmData> QueryAtmosphereList(int atmId);
+        List<AtmData> QueryAtmosphereZoneList(int id);
+
+        List<AtmData> QueryAtmosphereList();
         int QueryZoneRobery(int zoneId);
         int QueryZonePassage(int zoneId);
-        IEnumerable<ZoneParkingData> QueryZoneParkingList();
-        public IEnumerable<ZoneParkingData> QueryZoneParkingList(int zoneParkingId);
+
+        IEnumerable<ZoneAreaData> QueryZoneAreaList();
+        IEnumerable<string> QueryGetZoneNamesIEnumerable();
+        string QueryZoneAreaVehicle(int vehicleId);
+
+        List<VehicleRoberyData> QueryGetRoberyList();
+        List<Zone> QueryGetZoneList();
+        IEnumerable<Vehicle> QueryVehicleDistinctZoneData();
+        int QueryNumberZones();
+        int QueryNumberSensores();
+        int QueryNumberRoberys();
+        IEnumerable<ZoneParkingData> QueryParkZone();
     }
 }

@@ -27,10 +27,12 @@ namespace IOT_Data.dataInteractors
         }
 
 
-
         public SensorType QuerySensorType(long typeId)
         {
             using var context = new SmartCityZoneContext();
+
+            Random a = new Random();
+          
             return context.SensorTypes.ToList()
                                   .Where(x => x.TypeId == typeId)
                                   .FirstOrDefault();
@@ -81,10 +83,15 @@ namespace IOT_Data.dataInteractors
                                   .Where(x => x.Zone.ZoneId == zoneId)
                                   .Count();
         }
-        public IEnumerable<AtmData> QueryAtmosphereList(int atmId)
+        public List<AtmData> QueryAtmosphereZoneList(int id)
         {
             using var context = new SmartCityZoneContext();
-            return context.AtmosphereData.Where(x => x.Sensor.Zone.ZoneId == atmId);
+            return context.AtmosphereData.Where(s=>s.Sensor.Zone.ZoneId==id).ToList();
+        }
+        public List<AtmData> QueryAtmosphereList()
+        {
+            using var context = new SmartCityZoneContext();
+            return context.AtmosphereData.ToList();
         }
         public int QueryZonePassage(int zoneId)
         {
@@ -107,6 +114,8 @@ namespace IOT_Data.dataInteractors
                                   .Where(x => x.ZoneId == zoneId)
                                   .FirstOrDefault();
         }
+
+
         public List<Zone> QueryGetZoneList()
         {
             using var context = new SmartCityZoneContext();
@@ -114,8 +123,17 @@ namespace IOT_Data.dataInteractors
         }
 
 
+        public IEnumerable<string> QueryGetZoneNamesIEnumerable()
+        {
+            using var context = new SmartCityZoneContext();
+            return context.Zones.Select(s=>s.Name);
+        }
 
-
+        public IEnumerable<ZoneAreaData> QueryZoneAreaList()
+        {
+            using var context = new SmartCityZoneContext();
+            return context.ZoneAreas;
+        }
 
         public int QueryNumberSensor(int id)
         {
@@ -124,20 +142,49 @@ namespace IOT_Data.dataInteractors
 
         }
 
+        
 
+       
 
-        public IEnumerable<ZoneParkingData> QueryZoneParkingList(int zoneParkingId)
+        public string QueryZoneAreaVehicle(int vehicleId)
         {
             using var context = new SmartCityZoneContext();
-            return context.ZoneParkingRegister
-                                  .Where(x => x.Sensor.Zone.ZoneId == zoneParkingId).ToList();
-        }
-        public IEnumerable<ZoneParkingData> QueryZoneParkingList()
-        {
-            using var context = new SmartCityZoneContext();
-            return context.ZoneParkingRegister;
+
+            return context.ZoneAreas.Where(s => s.Vehicle.VehicleId == vehicleId).OrderByDescending(s => s.Date).Select(s=>s.Sensor.Zone.Name).First();
         }
 
 
+        public IEnumerable<ZoneParkingData> QueryParkZone()
+        {
+            using var context = new SmartCityZoneContext();
+            return context.ZoneParkingRegister.Where(item => item.Duration == null);
+        }
+
+
+
+        public IEnumerable<Vehicle> QueryVehicleDistinctZoneData()
+        {
+            using var context = new SmartCityZoneContext();
+            return context.ZoneAreas.Select(s=>s.Vehicle).Distinct().ToList();
+        }
+
+        public int QueryNumberZones()
+        {
+            using var context = new SmartCityZoneContext();
+            return context.Zones.Distinct().Count();
+        }
+
+        public int QueryNumberRoberys()
+        {
+            using var context = new SmartCityZoneContext();
+            return context.VehicleRoberies.Count();
+        }
+
+        public int QueryNumberSensores()
+        {
+            using var context = new SmartCityZoneContext();
+            return context.Sensors.Distinct().Count();
+        }
     }
+
 }

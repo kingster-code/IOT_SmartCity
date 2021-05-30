@@ -99,15 +99,14 @@ namespace SimulatorService
 
                     var airValues = new List<double>
                     {
-                        _rand.NextDouble() * 100, // co2
-                        _rand.NextDouble() * 10,  // co
-                        _rand.NextDouble() * 2,   // hc
-                        _rand.NextDouble() * 15,  // rcho
-                        _rand.NextDouble() * 4,   // nox
-                        _rand.NextDouble() * 3,   // sox
-                        _rand.NextDouble() * 6    // mp
+                        _rand.NextDouble() * 100, // co2   500
+                        _rand.NextDouble() * 10,  // co    50
+                        _rand.NextDouble() * 2,   // hc    1
+                        _rand.NextDouble() * 15,  // rcho  7,5
+                        _rand.NextDouble() * 4,   // nox   2
+                        _rand.NextDouble() * 3,   // sox   1,5
+                        _rand.NextDouble() * 6    // mp    3
                     };
-
                     //await RegisterAirAsync(values, airValues);
                     RegisterAirAsync(values, airValues).GetAwaiter().GetResult(); ;
 

@@ -49,9 +49,9 @@ namespace SimulatorBusiness.Business
                 //Zone = zoneList.Where(y => y.ZoneId == x.AtachedZone.ZoneID).First(),
                 Zone = _dataGetter.QueryZone(x.AtachedZone.ZoneID),
                 Type = airSensorType
-            }).ToList());
+            }).ToList());           
+        
         }
-
         /// <summary>
         /// Inserts all given sensor types to the DB.
         /// </summary>

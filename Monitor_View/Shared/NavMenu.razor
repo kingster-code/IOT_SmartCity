@@ -25,8 +25,8 @@
                         </NavLink>
                     </li>
                      <li class="nav-item px-3">
-                        <NavLink class="nav-link" href="dadosparkingprofit" style="font-size:10px;">
-                            <span class="oi oi-list-rich" aria-hidden="true"></span> Parquing 
+                        <NavLink class="nav-link" href="dadosparques" style="font-size:10px;">
+                            <span class="oi oi-list-rich" aria-hidden="true"></span> Parques 
                         </NavLink>
                     </li>
                     <li class="nav-item px-3">
@@ -34,21 +34,32 @@
                             <span class="oi oi-list-rich" aria-hidden="true"></span> Roubos por zona
                         </NavLink>
                     </li>
+                </ul>
+
+            }
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" @onclick="()=>expandSubMenu2= !expandSubMenu2" href="dadosatmlast24hour">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Controlo Atmosférico
+            </NavLink>
+            @if (expandSubMenu2)
+            {
+                <ul class="nav flex-column">
                     <li class="nav-item px-3">
-                        <NavLink class="nav-link" href="dadosatm" style="font-size:10px;">
-                            <span class="oi oi-list-rich" aria-hidden="true" ></span> Dados Atmosféricos
+                        <NavLink class="nav-link" href="dadosatmlastmonth" style="font-size:10px;">
+                            <span class="oi oi-list-rich" aria-hidden="true"></span> Último mês
+                        </NavLink>
+                    </li>
+                    <li class="nav-item px-3">
+                        <NavLink class="nav-link" href="dadosatmlast24hour" style="font-size:10px;">
+                            <span class="oi oi-list-rich" aria-hidden="true"></span> Último dia
                         </NavLink>
                     </li>
                 </ul>
 
             }
         </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="calendario2">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Controlo Atmosférico 
-            </NavLink>
 
-        </li>
 
     </ul>
 </div>
@@ -56,6 +67,7 @@
 @code {
     private bool collapseNavMenu = true;
     private bool expandSubMenu;
+    private bool expandSubMenu2;
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
     private void ToggleNavMenu()
