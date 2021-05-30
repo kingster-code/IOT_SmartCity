@@ -185,6 +185,55 @@ namespace IOT_Data.dataInteractors
             using var context = new SmartCityZoneContext();
             return context.Sensors.Distinct().Count();
         }
+
+        public double QueryCo2Day(DateTime date)
+        {
+            using var context = new SmartCityZoneContext();
+            var co2 = context.AtmosphereData.Where(s => s.Date.Date == date.Date).Select(a => a.CO2);
+            return co2.Sum() / co2.Count();
+        }
+
+        public double QueryCoDay(DateTime date)
+        {
+            using var context = new SmartCityZoneContext();
+            var co = context.AtmosphereData.Where(s => s.Date.Date == date.Date).Select(a => a.CO);
+            return co.Sum() / co.Count();
+        }
+
+        public double QueryMpDay(DateTime date)
+        {
+            using var context = new SmartCityZoneContext();
+            var aux = context.AtmosphereData.Where(s => s.Date.Date == date.Date).Select(a => a.MP);
+            return aux.Sum() / aux.Count();
+        }
+
+        public double QueryHcDay(DateTime date)
+        {
+            using var context = new SmartCityZoneContext();
+            var aux = context.AtmosphereData.Where(s => s.Date.Date == date.Date).Select(a => a.HC);
+            return aux.Sum() / aux.Count();
+        }
+
+        public double QueryNOxDay(DateTime date)
+        {
+            using var context = new SmartCityZoneContext();
+            var aux = context.AtmosphereData.Where(s => s.Date.Date == date.Date).Select(a => a.NOx);
+            return aux.Sum() / aux.Count();
+        }
+
+        public double QueryRchoDay(DateTime date)
+        {
+            using var context = new SmartCityZoneContext();
+            var aux = context.AtmosphereData.Where(s => s.Date.Date == date.Date).Select(a => a.Rcho);
+            return aux.Sum() / aux.Count();
+        }
+
+        public double QuerySOxDay(DateTime date)
+        {
+            using var context = new SmartCityZoneContext();
+            var aux = context.AtmosphereData.Where(s => s.Date.Date == date.Date).Select(a => a.SOx);
+            return aux.Sum() / aux.Count();
+        }
     }
 
 }
