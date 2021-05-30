@@ -5,8 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="business\" />
     <Folder Include="DTO\" />
+    <Folder Include="interf\" />
+    <Folder Include="business2\" />
     <Folder Include="interfaces\" />
   </ItemGroup>
   <ItemGroup>

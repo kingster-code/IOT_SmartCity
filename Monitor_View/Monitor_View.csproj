@@ -19,5 +19,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\css\images\Captura de ecrã 2021-05-14, às 19.57.02.png" />
+    <Content Remove="Pages\DadosAtmosfLastMonth.razor" />
+    <Content Remove="Pages\DadosAtmosfLast24Hour.razor" />
   </ItemGroup>
 </Project>

@@ -1,0 +1,125 @@
+﻿@page "/dadosatmlast24hour"
+
+@using IOT_Data.Models
+@using Monitor_Business.interfaces
+@using Monitor_Business.DTO
+@inject IZoneBusiness funcoes
+@using Syncfusion.Blazor.Data
+@inject NavigationManager NavigationManager
+<div class="row">
+    <div class="col-xl-8 col-lg-7">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Dados Atmosféricos dos últimos 3 anos</h6>
+            </div>
+            <div class="card-body">
+                <SfChart Title="Dados relativos aos gases tóxicos nas últimas 24 horas" Theme="@Theme" @ref="Chart">
+                    <ChartArea><ChartAreaBorder Width="0"></ChartAreaBorder></ChartArea>
+                    <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.DateTime" IntervalType="IntervalType.Minutes" EdgeLabelPlacement="EdgeLabelPlacement.Shift">
+                        <ChartAxisMajorGridLines Width="0"></ChartAxisMajorGridLines>
+                    </ChartPrimaryXAxis>
+                    <ChartPrimaryYAxis LabelFormat="{value}" RangePadding="ChartRangePadding.None">
+                        <ChartAxisLineStyle Width="0"></ChartAxisLineStyle>
+                        <ChartAxisMajorTickLines Width="0"></ChartAxisMajorTickLines>
+                    </ChartPrimaryYAxis>
+                    <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
+                    <ChartSeriesCollection>
+                        <ChartSeries DataSource="@zones" Name="CO2" XName="Date" Width="2"
+                                     Opacity="1" YName="CO" Type="ChartSeriesType.Line">
+                            <ChartMarker Visible="true" Width="10" Height="10">
+                            </ChartMarker>
+                        </ChartSeries>
+                        <ChartSeries DataSource="@zones" Name="CO" XName="Date" Width="2"
+                                     Opacity="1" YName="CO2" Type="ChartSeriesType.Line">
+                            <ChartMarker Visible="true" Width="10" Height="10">
+                            </ChartMarker>
+                        </ChartSeries>
+                        <ChartSeries DataSource="@zones" Name="NOx" XName="Date" Width="2"
+                                     Opacity="1" YName="NOx" Type="ChartSeriesType.Line">
+                            <ChartMarker Visible="true" Width="10" Height="10">
+                            </ChartMarker>
+                        </ChartSeries>
+                        <ChartSeries DataSource="@zones" Name="SOx" XName="Date" Width="2"
+                                     Opacity="1" YName="SOx" Type="ChartSeriesType.Line">
+                            <ChartMarker Visible="true" Width="10" Height="10">
+                            </ChartMarker>
+                        </ChartSeries>
+                        <ChartSeries DataSource="@zones" Name="HC" XName="Date" Width="2"
+                                     Opacity="1" YName="HC" Type="ChartSeriesType.Line">
+                            <ChartMarker Visible="true" Width="10" Height="10">
+                            </ChartMarker>
+                        </ChartSeries>
+                        <ChartSeries DataSource="@zones" Name="Rcho" XName="Date" Width="2"
+                                     Opacity="1" YName="Rcho" Type="ChartSeriesType.Line">
+                            <ChartMarker Visible="true" Width="10" Height="10">
+                            </ChartMarker>
+                        </ChartSeries>
+                        <ChartSeries DataSource="@zones" Name="MP" XName="Date" Width="2"
+                                     Opacity="1" YName="MP" Type="ChartSeriesType.Line">
+                            <ChartMarker Visible="true" Width="10" Height="10">
+                            </ChartMarker>
+                        </ChartSeries>
+                    </ChartSeriesCollection>
+                </SfChart>
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="Id do sensor atmosfera">Id do sensor atmosfera</label>
+                    <div class="col-md-4">
+                        <input id="Id do sensor atmosfera" name="Id do sensor atmosfera" type="text" placeholder="´" class="form-control input-md" @bind-value="@CurrentValue" @bind-value:event="oninput">
+                    </div>
+                </div>
+
+                <!-- Button -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for=""></label>
+                    <div class="col-md-4">
+                        <button @onclick="Atualizar" class="btn btn-primary">Atualizar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@code {
+    private Theme Theme { get; set; }
+    SfChart Chart;
+    List<AtmData> zones;
+
+    private List<AtmData> zonesinicial = new List<AtmData>();
+    private int CurrentValue { get; set; }
+
+    private void Atualizar()
+    {
+        zones = funcoes.GetAtmZone24Hour(CurrentValue).ToList();
+        Chart.RefreshLiveData();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        CurrentValue = 1;
+        zones = funcoes.GetAtmZone24Hour(CurrentValue);
+
+        //zones=funcoes.GetAtmZone24Hour(CurrentValue).ToList();
+        if (NavigationManager.Uri.IndexOf("material") > -1)
+        {
+            Theme = Theme.Material;
+        }
+        else if (NavigationManager.Uri.IndexOf("fabric") > -1)
+        {
+            Theme = Theme.Fabric;
+        }
+        else if (NavigationManager.Uri.IndexOf("bootstrap") > -1)
+        {
+            Theme = Theme.Bootstrap;
+        }
+        else if (NavigationManager.Uri.IndexOf("highcontrast") > -1)
+        {
+            Theme = Theme.HighContrast;
+        }
+        else
+        {
+            Theme = Theme.Bootstrap4;
+        }
+
+    }
+}

@@ -154,13 +154,17 @@ namespace IOT_Data.dataInteractors
         }
 
 
-        public IEnumerable<ZoneParkingData> QueryParkZone()
+        public int QueryParkZone(int id)
         {
             using var context = new SmartCityZoneContext();
-            return context.ZoneParkingRegister.Where(item => item.Duration == null);
+            return context.ZoneParkingRegister.Where(a => a.Duration == null && a.Sensor.Zone.ZoneId==id).Count();
         }
 
-
+        public int QuerySensorZona(int id)
+        {
+            using var context = new SmartCityZoneContext();
+            return context.Sensors.First(s => s.SensorId == id).Zone.ZoneId;
+        }
 
         public IEnumerable<Vehicle> QueryVehicleDistinctZoneData()
         {

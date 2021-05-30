@@ -1,4 +1,4 @@
-﻿    @page "/dadosatmlastmonth"
+﻿@page "/dadosatmlastmonth"
 
 @using IOT_Data.Models
 @using Monitor_Business.interfaces
@@ -9,7 +9,7 @@
 
 <SfChart Title="Dados relativos aos gases tóxicos no último mes" Theme="@Theme" @ref="Chart">
     <ChartArea><ChartAreaBorder Width="0"></ChartAreaBorder></ChartArea>
-    <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.DateTime"  IntervalType="IntervalType.Days" EdgeLabelPlacement="EdgeLabelPlacement.Shift">
+    <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.DateTime" IntervalType="IntervalType.Days" EdgeLabelPlacement="EdgeLabelPlacement.Shift">
         <ChartAxisMajorGridLines Width="0"></ChartAxisMajorGridLines>
     </ChartPrimaryXAxis>
     <ChartPrimaryYAxis LabelFormat="{value}" RangePadding="ChartRangePadding.None">
@@ -80,9 +80,9 @@
 
     private void Atualizar()
     {
-       
 
-        zones=funcoes.GetAtmZoneLastMonth(CurrentValue).ToList();
+
+        zones = funcoes.GetAtmZoneLastMonth(CurrentValue).ToList();
         Chart.RefreshLiveData();
     }
 
@@ -90,7 +90,7 @@
     {
         CurrentValue = 1;
 
-        zones=funcoes.GetAtmZoneLastMonth(CurrentValue).ToList();
+        zones = funcoes.GetAtmZoneLastMonth(CurrentValue).ToList();
         if (NavigationManager.Uri.IndexOf("material") > -1)
         {
             Theme = Theme.Material;

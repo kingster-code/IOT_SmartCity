@@ -35,7 +35,7 @@ namespace IOT_Data.interfaces
         int QueryNumberZones();
         int QueryNumberSensores();
         int QueryNumberRoberys();
-        IEnumerable<ZoneParkingData> QueryParkZone();
+        int QueryParkZone(int id );
         double QueryCo2Day(DateTime date);
         double QueryCoDay(DateTime date);
         double QueryMpDay(DateTime date);
@@ -43,5 +43,6 @@ namespace IOT_Data.interfaces
         double QueryNOxDay(DateTime date);
         double QueryRchoDay(DateTime date);
         double QuerySOxDay(DateTime date);
+        int QuerySensorZona(int id);
     }
 }
