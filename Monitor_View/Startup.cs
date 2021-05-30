@@ -11,8 +11,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Monitor_Business.business;
-using Monitor_Business.interfaces;
+using Monitor_Business.business2;
+using Monitor_Business.interf;
 using Syncfusion.Blazor;
 
 namespace Monitor_View

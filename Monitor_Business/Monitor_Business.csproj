@@ -5,9 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="business\" />
     <Folder Include="DTO\" />
-    <Folder Include="interfaces\" />
+    <Folder Include="interf\" />
+    <Folder Include="business2\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\IOT_Data\IOT_Data.csproj" />
