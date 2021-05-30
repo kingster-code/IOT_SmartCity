@@ -20,8 +20,8 @@ namespace IOT_Data.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseSqlite("Data Source=C:/Users/danny/Desktop/UBI/Semestre 2/IOT/DBIOT/SmartCity.db;");
-            optionsBuilder.UseSqlite("Data Source= /Users/rodrigosaraiva/Desktop/IOT_SmartCity/DB/SmartCity.db");
+            optionsBuilder.UseSqlite("Data Source=C:/Users/danny/Desktop/UBI/Semestre 2/IOT/DBIOT/SmartCity.db;");
+            //optionsBuilder.UseSqlite("Data Source= /Users/rodrigosaraiva/Desktop/IOT_SmartCity/DB/SmartCity.db");
 
 
         }

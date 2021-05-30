@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IOT_Data.Migrations
 {
     [DbContext(typeof(SmartCityZoneContext))]
-    [Migration("20210516171112_Initial")]
-    partial class Initial
+    [Migration("20210530025345_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -183,7 +183,7 @@ namespace IOT_Data.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("TEXT");
 
-                    b.Property<TimeSpan>("Duration")
+                    b.Property<TimeSpan?>("Duration")
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("SensorId")

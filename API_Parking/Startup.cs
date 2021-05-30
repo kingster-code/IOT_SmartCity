@@ -15,7 +15,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace IOT_API
+namespace API_Parking
 {
     public class Startup
     {
@@ -29,11 +29,10 @@ namespace IOT_API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IZoneBusiness, ZoneBusiness>();
+            services.AddScoped<IParkingBusiness, ParkingBusiness>();
 
             services.AddScoped<IInfoGetter, InfoGetter>();
-            services.AddScoped<IZoneAtmRegistrator, ZoneAtmRegistrator>();
-            services.AddScoped<IZoneRegistrator, ZoneRegistrator>();
+            services.AddScoped<IParkingRegistrator, ParkingRegistrator>();
 
             services.AddControllers();
         }

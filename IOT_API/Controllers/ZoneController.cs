@@ -13,7 +13,6 @@ namespace IOT_API.Controllers
     [Route("[controller]")]
     public class ZoneController : ControllerBase
     {
-
         private readonly ILogger<ZoneController> _logger;
         private readonly IZoneBusiness _zoneHandler;
 
@@ -57,6 +56,7 @@ namespace IOT_API.Controllers
             catch (Exception)
             {
                 Console.WriteLine("Problem detected when registering Zone Pass");
+                return StatusCode(500);
             }
 
             return Ok();
@@ -124,6 +124,7 @@ namespace IOT_API.Controllers
             catch (Exception)
             {
                 Console.WriteLine("Problem detected when registering Gas Reading");
+                return StatusCode(500);
             }
 
             return Ok();

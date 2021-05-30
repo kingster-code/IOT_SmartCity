@@ -13,8 +13,7 @@ namespace IOT_Data.Models
         public Sensor Sensor { get; set; }
         [Required]
         public Vehicle Vehicle { get; set; }
-        [Required]
-        public TimeSpan Duration { get; set; }
+        public TimeSpan? Duration { get; set; }
         [Required]
         public DateTime Date { get; set; }
     }

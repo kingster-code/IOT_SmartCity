@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace IOT_Data.Migrations
 {
-    public partial class Initial : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -162,7 +162,7 @@ namespace IOT_Data.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     SensorId = table.Column<int>(type: "INTEGER", nullable: true),
                     VehicleId = table.Column<int>(type: "INTEGER", nullable: true),
-                    Duration = table.Column<TimeSpan>(type: "TEXT", nullable: false),
+                    Duration = table.Column<TimeSpan>(type: "TEXT", nullable: true),
                     Date = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>

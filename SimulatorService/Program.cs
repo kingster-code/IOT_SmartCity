@@ -30,7 +30,6 @@ namespace SimulatorService
                             .AddScoped<IDataPurger, DataPurger>()
                             .AddScoped<IInfoGetter, InfoGetter>()
                             .AddSingleton<SimExecuter>()
-
                 );
     }
 }

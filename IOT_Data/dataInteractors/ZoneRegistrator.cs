@@ -26,8 +26,8 @@ namespace IOT_Data.dataInteractors
             {
                 using var context = new SmartCityZoneContext();
 
-                zone.Vehicle = context.Vehicles.ToList().Where(x => x.VehicleId == zone.Vehicle.VehicleId).First();
-                zone.Sensor = context.Sensors.ToList().Where(x => x.SensorId == zone.Sensor.SensorId).First();
+                zone.Vehicle = context.Vehicles.Where(x => x.VehicleId == zone.Vehicle.VehicleId).First();
+                zone.Sensor = context.Sensors.Where(x => x.SensorId == zone.Sensor.SensorId).First();
 
                 context.Add(zone);
                 context.SaveChanges();
