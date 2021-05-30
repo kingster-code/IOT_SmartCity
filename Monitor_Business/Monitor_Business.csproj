@@ -4,9 +4,14 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <!--<ItemGroup>
+    <Compile Remove="interf\**" />
+    <EmbeddedResource Remove="interf\**" />
+    <None Remove="interf\**" />
+  </ItemGroup>-->
+
   <ItemGroup>
     <Folder Include="DTO\" />
-    <Folder Include="interf\" />
     <Folder Include="business2\" />
     <Folder Include="interfaces\" />
   </ItemGroup>
