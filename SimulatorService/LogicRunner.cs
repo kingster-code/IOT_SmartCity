@@ -18,7 +18,9 @@ namespace SimulatorService
         {
             while (true)
             {
+                Console.WriteLine($"Started Call API");
                 _sim.CallAPI();
+                Console.WriteLine($"Finished Call API");
                 Task.Delay(10 * 1000).GetAwaiter().GetResult();
             }
         }

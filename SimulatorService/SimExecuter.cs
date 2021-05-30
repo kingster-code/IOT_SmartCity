@@ -2,6 +2,7 @@
 using SimulatorBusiness.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,8 @@ namespace SimulatorService
     public class SimExecuter
     {
         private readonly HttpClient _client;
-        private readonly string _url;
+        private readonly string _urlZone;
+        private readonly string _urlPark;
         private readonly int _numOfCars;
         private readonly int _numOfZones;
         public IDataBaseFlusher _flusher { get; set; }
@@ -27,7 +29,8 @@ namespace SimulatorService
         public SimExecuter(IDataBaseFlusher flusher, bool createDB = false)
         {
             _client = new HttpClient();
-            _url = "https://localhost:5001";
+            _urlZone = "https://localhost:5001";
+            _urlPark = "https://localhost:6001";
             _numOfCars = 15000;
             _numOfZones = 5;
 
@@ -54,7 +57,7 @@ namespace SimulatorService
             //{
             foreach (var car in _cars)
             {
-                if (_rand.NextDouble() < 0.021)
+                if (_rand.NextDouble() < 0.021 && car._parked == false)
                 {
                     carMovedCount += 1;
 
@@ -108,20 +111,86 @@ namespace SimulatorService
                         _rand.NextDouble() * 6    // mp    3
                     };
                     //await RegisterAirAsync(values, airValues);
-                    RegisterAirAsync(values, airValues).GetAwaiter().GetResult(); ;
+                    RegisterAirAsync(values, airValues).GetAwaiter().GetResult();
 
                     Console.WriteLine($"Sensor {airSensor.Id}, registered atmosphere quality for zone {airSensor.AtachedZone.ZoneID}");
                 }
             }
-            //});
-            Console.WriteLine($"Finished Call API");
+
+            //-------------------------------------------------------------------------
+            
+            foreach (var car in _cars.Where(car => car._parked == true))
+            {
+                if (_rand.NextDouble() < 0.5)
+                {
+                    //Call parking API for exit
+                    RegisterDeparkAsync(car._rfid).GetAwaiter().GetResult();
+
+                    car._parked = false;
+                    Console.WriteLine($"car {car} just went on the road!");
+                }
+            }
+
+            foreach (var car in _cars.Where(car => car._parked == false))
+            {
+                if (_rand.NextDouble() < 0.2)
+                {
+                    var values = new List<long>();
+
+                    var zoneIndex = _zones.IndexOf(car._zone);
+                    var zonesensors = _zones[zoneIndex].zoneSensors;
+
+                    var sensor = zonesensors[_rand.Next(0, zonesensors.Count)];
+
+                    values.Add(zoneIndex);
+                    values.Add(sensor.Id);
+                    values.Add(car._rfid);
+
+                    //Call parking API for entery
+                    RegisterParkAsync(values).GetAwaiter().GetResult();
+
+                    car._parked = true;
+                    Console.WriteLine($"car {car} is doing a pit stop!");
+                }
+            }
+        }
+
+        private async Task RegisterDeparkAsync(long rfid)
+        {
+            try
+            {
+                HttpResponseMessage response = await _client.GetAsync($"{_urlZone}/zone/traffic/{rfid}");
+                response.EnsureSuccessStatusCode();
+            }
+            catch (HttpRequestException e)
+            {
+                Console.WriteLine("\nException Caught!");
+                Console.WriteLine("Message :{0} ", e.Message);
+            }
+        }
+
+        private async Task RegisterParkAsync(List<long> values)
+        {
+            try
+            {
+                StringBuilder stringer = new StringBuilder($"{_urlPark}/parking/entery/");
+                stringer.AppendJoin('/', values);
+
+                HttpResponseMessage response = await _client.GetAsync(stringer.ToString());
+                response.EnsureSuccessStatusCode();
+            }
+            catch (HttpRequestException e)
+            {
+                Console.WriteLine("\nException Caught!");
+                Console.WriteLine("Message :{0} ", e.Message);
+            }
         }
 
         private async Task RegisteZonePassAsync(List<long> values)
         {
             try
             {
-                StringBuilder stringer = new StringBuilder($"{_url}/zone/traffic/");
+                StringBuilder stringer = new StringBuilder($"{_urlZone}/zone/traffic/");
                 stringer.AppendJoin('/', values);
 
 
@@ -145,7 +214,7 @@ namespace SimulatorService
         {
             try
             {
-                StringBuilder stringer = new StringBuilder($"{_url}/zone/air/");
+                StringBuilder stringer = new StringBuilder($"{_urlZone}/zone/air/");
                 stringer.AppendJoin('/', values);
                 stringer.Append($"?co2={airValues[0]}");
                 stringer.Append($"&co={airValues[1]}");
