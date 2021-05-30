@@ -1,6 +1,6 @@
 ﻿namespace SimulatorBusiness.DTO
 {
-    public class Sensor
+    public abstract class Sensor
     {
         public Zone AtachedZone { get; set; }
         public long Id { get; set; }
